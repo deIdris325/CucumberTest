@@ -86,38 +86,6 @@ public class BasicStepdefs {
         return pageFactory;
     }
 
-    private List<By> fetchPossibleImgxPath(final String locator) {
-        List<By> bys = new ArrayList<By>();
-        bys.add(By.xpath("//img[@src='/image/" + locator + "']"));
-        bys.add(By.xpath("//img[@src='https://tvdownloaddw-a.akamaihd.net/stills/images/vdt_de/2016/" + locator + "']"));
-        return bys;
-    }
-
-    protected void verifyImagePresent(final String locator) {
-        try {
-            List<By> possibleBys = fetchPossibleImgxPath(locator);
-            driver.setImplicitWaitTo(1);
-
-            for (By possibleBy : possibleBys) {
-                try {
-                    //driver.findElement(By.xpath("//img[@src='/image/" + arg1 + "']"));
-                    WebElement ImageFile = driver.findElement(possibleBy);
-                    Boolean ImagePresent = (Boolean) driver.executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", ImageFile);
-                    if (!ImagePresent) {
-                        System.out.println("Image not displayed.");
-                    } else {
-                        System.out.println("Image displayed.");
-                    }
-                    return;
-                } catch (NoSuchElementException nsee) {
-                    // ignore
-                }
-            }
-            throw new NoSuchElementException("No Element found for locator '" + locator + "'!");
-        } finally {
-            driver.resetImplicitWaitToDefault();
-        }
-    }
 
     public void verfiyPresentImage(String arg1) throws Throwable {
         WebElement ImageFile = driver.findElement(By.xpath("//img[@src='/image/" + arg1 + "']"));
